@@ -39,7 +39,7 @@ pipeline {
                   odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
 
                    
-                 dependencyCheckPublisher pattern: '/dependency-check-report.xml'
+                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
         }
     }
 }          stage('SonarQube Analysis') {
