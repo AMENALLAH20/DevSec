@@ -33,7 +33,7 @@ pipeline {
 
             // Exécuter OWASP Dependency-Check
             dependencyCheck additionalArguments: '''
-                -o './reports/owasp'
+                -o './'
                 -s './'
                 -f 'ALL'
                 --prettyPrint
@@ -41,7 +41,7 @@ pipeline {
                 odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
 
             // Publier le rapport XML
-            dependencyCheckPublisher pattern: 'reports/owasp/dependency-check-report.xml'
+            dependencyCheckPublisher pattern: 'dependency-check-report.xml'
         }
     }
 }
