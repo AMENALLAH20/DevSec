@@ -1,6 +1,7 @@
 pipeline {
-  agent any
-   tools {
+    agent any
+
+    tools {
         jdk 'jdk-17'       // Nom configuré de votre JDK dans Jenkins
         maven 'mvn-3.6.3'  // Nom configuré de votre Maven dans Jenkins
     }
@@ -17,13 +18,45 @@ pipeline {
             }
         }
 
+        stage('OWASP Dependency-Check Vulnerabilities') {
+            steps {
+                withMaven(maven: 'mvn-3.6.3') {
+                    // Exécution du check des vulnérabilités avec OWASP Dependency-Check
+                    sh 'mvn dependency-check:check'
+                }
+                // Publier le rapport de sécurité dans Jenkins
+                dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+            }
+        }
 
+        stage('SonarQube analysis') {
+            steps {
+                withSonarQubeEnv(credentialsId: 'sonarqube-secret', installationName: 'sonarqube-server') {
+                    withMaven(maven: 'mvn-3.6.3') {
+                        // Analyse SonarQube avec les rapports OWASP Dependency-Check
+                        sh 'mvn sonar:sonar -Dsonar.dependencyCheck.jsonReportPath=target/dependency-check-report.json ' +
+                           '-Dsonar.dependencyCheck.xmlReportPath=target/dependency-check-report.xml ' +
+                           '-Dsonar.dependencyCheck.htmlReportPath=target/dependency-check-report.html'
+                    }
+                }
+            }
+        }
 
+        // Ajoute d'autres étapes si nécessaire...
+    }
 
-
-
-
-
-
-  }
+    post {
+        always {
+            // Action après chaque exécution de pipeline (ex: nettoyage)
+            cleanWs()  // Nettoyer l'espace de travail
+        }
+        success {
+            // Actions à réaliser si le pipeline réussit
+            echo 'Build and tests completed successfully!'
+        }
+        failure {
+            // Actions en cas d'échec
+            echo 'Build failed, please check the logs.'
+        }
+    }
 }
