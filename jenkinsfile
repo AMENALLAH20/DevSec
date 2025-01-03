@@ -28,22 +28,18 @@ pipeline {
          stage('OWASP Dependency-Check Vulnerabilities') {
              steps {
                script {
-                 // Créer le répertoire de sortie au cas où
-                 bat 'mkdir reports\\owasp || echo Directory exists'
+                
 
                 // Exécuter Dependency-Check
                   dependencyCheck additionalArguments: '''
-                  -o './reports/owasp'
+                  -o './'
                   -s './'
                   -f 'ALL'
                   --prettyPrint''', 
                   odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
 
-                   // Vérifier les fichiers générés
-                  bat 'dir reports\\owasp /s'
-
-                 // Publier les rapports
-                 dependencyCheckPublisher pattern: 'reports/owasp/dependency-check-report.xml'
+                   
+                 dependencyCheckPublisher pattern: '/dependency-check-report.xml'
         }
     }
 }          stage('SonarQube Analysis') {
