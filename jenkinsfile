@@ -23,28 +23,18 @@ pipeline {
                     bat 'mvn clean package -DskipTests'
                 }
             }
-        }
-
-       stage('OWASP Dependency-Check Vulnerabilities') {
-         steps {
-            script {
-            // Créer un répertoire dédié pour les rapports
-            bat 'mkdir reports\\owasp || echo Directory exists'
-
-            // Exécuter OWASP Dependency-Check
-            dependencyCheck additionalArguments: '''
-                -o './'
-                -s './'
-                -f 'ALL'
-                --prettyPrint
-                --log-level DEBUG''',
-                odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
-
-            // Publier le rapport XML
-            dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-        }
+        } 
+      stage('OWASP Dependency-Check Vulnerabilities') {
+       steps {
+         dependencyCheck additionalArguments: ''' 
+                    -o './'
+                    -s './'
+                    -f 'ALL' 
+                    --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+        
+         dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+      }
     }
-}
 
 
 
