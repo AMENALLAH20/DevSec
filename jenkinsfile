@@ -17,13 +17,13 @@ pipeline {
                 git 'https://github.com/AMENALLAH20/DevSec.git'
             }
         }
-        stage('Build') {
+        stage('Build and Test') {
             steps {
-            withMaven(maven : 'mvn-3.6.3') {
-            sh "mvn package"
-             }
-           }
-         }
+                script {
+                    sh 'mvn clean package'
+                }
+            }
+        }
 
         stage('OWASP Dependency-Check Vulnerabilities') {
            steps {
