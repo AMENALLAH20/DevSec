@@ -40,18 +40,7 @@ pipeline {
 
     }
 
-    post {
-        always {
-            // Action après chaque exécution de pipeline (ex: nettoyage)
-            cleanWs()  // Nettoyer l'espace de travail
-        }
-        success {
-            // Actions à réaliser si le pipeline réussit
-            echo 'Build and tests completed successfully!'
-        }
-        failure {
-            // Actions en cas d'échec
-            echo 'Build failed, please check the logs.'
-        }
-    }
+   
+     
+    
 }
