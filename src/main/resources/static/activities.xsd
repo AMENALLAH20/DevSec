@@ -1,0 +1,19 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.amen.com/loisir" xmlns:tns="http://www.amen.com/loisir"
+           elementFormDefault="qualified">
+    <xs:element name="GetAvailableSeatsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="activityId" type="xs:int" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAvailableSeatsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="availableSeats" type="xs:int" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

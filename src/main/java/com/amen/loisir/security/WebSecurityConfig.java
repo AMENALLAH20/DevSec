@@ -55,6 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
+                .antMatchers("/ws/**").permitAll()  // Permet l'accès sans authentification à l'API SOAP
+
                 .antMatchers("/signin").permitAll()
 
                 .antMatchers("/user/**").permitAll()

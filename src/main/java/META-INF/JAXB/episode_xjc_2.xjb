@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings version="3.0" xmlns="https://jakarta.ee/xml/ns/jaxb">
+  <!--
+
+Ce fichier a été généré par Eclipse Implementation of JAXB, v3.0.0 
+Voir https://eclipse-ee4j.github.io/jaxb-ri 
+Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source. 
+Généré le : 2024.12.19 à 03:21:27 PM CET 
+
+  -->
+  <bindings scd="x-schema::tns" xmlns:tns="http://www.amen.com/loisir">
+    <schemaBindings map="false">
+      <package name="com.amen.loisir"/>
+    </schemaBindings>
+    <bindings scd="tns:GetAvailableSeatsRequest">
+      <class ref="com.amen.loisir.GetAvailableSeatsRequest"/>
+    </bindings>
+    <bindings scd="tns:GetAvailableSeatsResponse">
+      <class ref="com.amen.loisir.GetAvailableSeatsResponse"/>
+    </bindings>
+  </bindings>
+</bindings>
+
