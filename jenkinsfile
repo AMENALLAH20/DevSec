@@ -25,24 +25,27 @@ pipeline {
             }
         }
 
-         stage('OWASP Dependency-Check Vulnerabilities') {
-             steps {
-               script {
-                
+       stage('OWASP Dependency-Check Vulnerabilities') {
+         steps {
+            script {
+            // Créer un répertoire dédié pour les rapports
+            bat 'mkdir reports\\owasp || echo Directory exists'
 
-                // Exécuter Dependency-Check
-                  dependencyCheck additionalArguments: '''
-                  -o './'
-                  -s './'
-                  -f 'ALL'
-                  --prettyPrint''', 
-                  odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+            // Exécuter OWASP Dependency-Check
+            dependencyCheck additionalArguments: '''
+                -o './reports/owasp'
+                -s './'
+                -f 'ALL'
+                --prettyPrint
+                --log-level DEBUG''',
+                odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
 
-                   
-                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            // Publier le rapport XML
+            dependencyCheckPublisher pattern: 'reports/owasp/dependency-check-report.xml'
         }
     }
-}       
+}
+
 
 
     }
