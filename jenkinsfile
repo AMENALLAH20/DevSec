@@ -30,8 +30,10 @@ pipeline {
                     -o './'
                     -s './'
                     -f 'XML' 
+                    ''',
+                    odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
 
-         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+
       }
     }
 
