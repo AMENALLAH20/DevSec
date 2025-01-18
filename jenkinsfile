@@ -29,7 +29,7 @@ pipeline {
          dependencyCheck additionalArguments: ''' 
                     -o './'
                     -s './'
-                    -f 'XML' 
+                    -f 'ALL' 
                     ''',
                     odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
 
