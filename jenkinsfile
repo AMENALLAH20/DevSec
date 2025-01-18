@@ -41,7 +41,22 @@ pipeline {
 
     }
 
-      
+       post {
+        always {
+            // Archiver les fichiers de rapport générés par OWASP Dependency-Check
+            archiveArtifacts artifacts: 'target/dependency-check-report.*', fingerprint: true
+
+            // Publier le rapport HTML dans Jenkins
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'target',
+                reportFiles: 'dependency-check-report.html',
+                reportName: 'OWASP Dependency-Check Report'
+            ])
+        }
+    }
 
    
      
