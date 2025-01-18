@@ -28,6 +28,8 @@ pipeline {
                     -o './'
                     -s './'
                     -f 'ALL' 
+                    -Dtika.config=tempDir=C:/Temp   // Spécifier le répertoire temporaire
+                ''',
                     --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
         
         dependencyCheckPublisher pattern: 'dependency-check-report.xml'
