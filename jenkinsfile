@@ -42,7 +42,7 @@ pipeline {
             }
             steps {
               withSonarQubeEnv(credentialsId: '	123', installationName: 'sonar-qube') {
-                    bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=jenkins-pipline"
+                    bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=jenkins-pipline -Dsonar.sources=src -Dsonar.java.binaries=target/classes"
 
               }
             }
