@@ -25,11 +25,9 @@ pipeline {
         stage('OWASP Dependency-Check Vulnerabilities') {
       steps {
         dependencyCheck additionalArguments: ''' 
-                    -o './'
+                    -o './' -Dtika.config=tempDir=C:/Temp
                     -s './'
                     -f 'ALL' 
-                    -Dtika.config=tempDir=C:/Temp   // Spécifier le répertoire temporaire
-                ''',
                     --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
         
         dependencyCheckPublisher pattern: 'dependency-check-report.xml'
