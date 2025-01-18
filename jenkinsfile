@@ -19,46 +19,36 @@ pipeline {
         }
         stage('Build and Test') {
             steps {
-                script {
-                    bat 'mvn clean package -DskipTests'
-                }
+                sh 'mvn clean package -DskipTests'
             }
-        } 
-      stage('OWASP Dependency-Check Vulnerabilities') {
-       steps {
-         dependencyCheck additionalArguments: ''' 
-                    -o './'
-                    -s './'
-                    -f 'XML' 
-                    ''',
-                    odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
-
-
-      }
+        }
+        stage('OWASP Dependency-Check Vulnerabilities') {
+            steps {
+                dependencyCheck additionalArguments: '''
+                    -o './'           // Enregistrer les rapports dans la racine
+                    -s './src'        // Répertoire source à analyser
+                    -f 'ALL'          // Générer des rapports dans tous les formats
+                ''',
+                odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+            }
+        }
     }
 
-
-
-    }
-
-       post {
+    post {
         always {
-            // Archiver les fichiers de rapport générés par OWASP Dependency-Check
-            archiveArtifacts artifacts: 'target/dependency-check-report.*', fingerprint: true
+            // Archiver les rapports générés dans la racine
+            archiveArtifacts artifacts: 'dependency-check-report.*', fingerprint: true
 
-            // Publier le rapport HTML dans Jenkins
+            // Publier le rapport HTML
             publishHTML([
                 allowMissing: false,
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
-                reportDir: 'target',
+                reportDir: '.',
                 reportFiles: 'dependency-check-report.html',
                 reportName: 'OWASP Dependency-Check Report'
             ])
         }
     }
-
-   
-     
-    
 }
+
