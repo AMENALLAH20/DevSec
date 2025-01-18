@@ -23,32 +23,18 @@ pipeline {
             }
         }
         stage('OWASP Dependency-Check Vulnerabilities') {
-            steps {
-                dependencyCheck additionalArguments: '''
-                    -o './'           // Enregistrer les rapports dans la racine
-                    -s './src'        // Répertoire source à analyser
-                    -f 'ALL'          // Générer des rapports dans tous les formats
-                ''',
-                odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
-            }
-        }
+      steps {
+        dependencyCheck additionalArguments: ''' 
+                    -o './'
+                    -s './'
+                    -f 'ALL' 
+                    --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+        
+        dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+      }
+    }
     }
 
-    post {
-        always {
-            // Archiver les rapports générés dans la racine
-            archiveArtifacts artifacts: 'dependency-check-report.*', fingerprint: true
-
-            // Publier le rapport HTML
-            publishHTML([
-                allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: '.',
-                reportFiles: 'dependency-check-report.html',
-                reportName: 'OWASP Dependency-Check Report'
-            ])
-        }
-    }
+  
 }
 
