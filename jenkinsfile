@@ -27,8 +27,9 @@ pipeline {
                 dependencyCheck additionalArguments: ''' 
                             -o './'
                             -s './'
+                            -f 'ALL' 
 
-                dependencyCheckPublisher pattern: 'dependency-check-report.html'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }
         }
     }
